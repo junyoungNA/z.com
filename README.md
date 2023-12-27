@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## npxt create-next-app@latest 시import alias 란?
 
-## Getting Started
+- import alias를 커스터마이징 할거냐?라는 질문은 import시에 '@' 사용하여 루트를 표시하기할 수있게 (../app/~ -> @/app/~)
+  하는 import문을 ~표시나 다른표기로 커스터마이징할건지 물어보는 질문이다.
 
-First, run the development server:
+## 디렉토리(afterLogin),소괄호 기능
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- 주소창에 관여를 안하지만 그룹을 만들 수 있음
+- 폴더 주고가 app/(afterLogin)/home 이어도
+  브라우저에서는 /home으로 주소가 나온다.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+  ## next template 기능
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+  - 매번 새롭게 마운트되는 기능?
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+  ## next Image 컴포넌트
 
-## Learn More
+  - next 지원하는 Image 기능은 알아서 최적화를 진행해준다. -https://nextjs.org/docs/app/building-your-application/optimizing/images
 
-To learn more about Next.js, take a look at the following resources:
+## CSS.moudle 사용이유?
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- css module : 같은 클래스더라도 다른 모듈 파일에 있다면 브라우저상 css모듈이 무작위문자로 바꿔서 클래스를 바꿔줌
+- Emotion : next13과 연동안됨
+- Styled Component : Server Component SSR(서버컴포넌트와 문제가 있음)
+- vanilla extract : 새롭게 나온 css 라이브러리로 SSR 문제를 해결하였지만 Windows와 문제가 있음
+- sass, tailwind : 호불호 및 가독성
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## parallel Rotues, Intercepting Routes 모달 구현
 
-## Deploy on Vercel
+- parallel rotue는 같은 폴더 디렉토리, 위치에
+  있다면 주소는 디렉토리를 파일 경로를 따른다.
+  @modal폴더 안의 page.tsx를 통해 모달 컴포넌트의 로직 구현 후
+  @modal 폴더 경로와 같은위치에 layout.tsx 컴포넌트를 작성하여
+  해당 경로에서 modal 컴포넌트를 import 하여 children처럼 사용하다면
+  @modal 안에 있는 page.tsx 컴포넌트를 가져온다 경로는 layout 경로를 따름
+- Intercepting Routes 기능은 서로 다른 경로, 즉 주소가 다른지만
+  바로 위에서 서로 다른 주소에 있는 컴포넌트를 렌더링할 수 있는 기능
+- 이 두가지 기능을 통해 모달을 구현 가능
+  폴더의 경로가 다른 두 컴포넌트를 이어주는 것
+  parallel route가 컴포넌트를 Intercepting 했다.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## \_폴더이름 private 폴더 next13부터
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- 폴더 이름의 \_(언더바) 를 붙이면 route 기능은 없는 private 폴더가 생성됨!
+
+## next 에서 제공하는 컴포넌트는 서버 컴포넌트
+
+- next에서 'use client'를 사용하지 않았다면 서버 컴포넌트로 동작한다
+  async 등 비동기 컴포넌트로 구현가능
+- 서버 컴포넌트는 데이터를 다룰때 사용?
+
+## default.tsx에는 parallel Routes가 필요없을때?
+
+- next에서는 paller Route 기능에 대한 기본적인 컴포넌트를 작성해야한다? page.tsx or default.tsx
+- default.tsx가 제공하는 기능은 parellet Route기능이 필요가없거나 사용하지 않을 때 작성한다? return null 값으로 컴포넌트작성?
+- 주소가 localhost:3000 일 때는 children -> page.tsx, modal=>@modal/default.tsx
+  해당 default.tsx를 작성하지않았다면 404 에러가 발생했다.
+- 주소가 localhost:3000/i/flow/login 일 때는 children -> i/flow/login/page.tsx, modal -> @modal/i/flow/login/page.tsx
+
+## next/navigation에 route.push 와 router.replace
+
+- router.push는 localhost:3000 -> localhost:3000/login -> localhost:3000/i/flow/login
+  와 같은 폴더 구조이고 login으로 이동시 rotue.push가 진행되어 i/flow/login으로 route가 된다면
+  해당 i/flow/login애서 뒤로가기시 다시 login주소로 돌아옹면서 또 router.push가 진행되는 오류가 생긴다.
+
+- router.replace는 localhost:3000 -> localhost:3000/login -> localhost:3000/i/flow/login
+  와 같은 폴더 구조이고 login으로 이동시 router.replace가 진행되어 i/flow/login으로 route가 된다면
+  기존 localhost:3000/login 주소를 히스토리(기억)에서 지워버린다. 그러므로 localhost:3000/i/flow/login에서 뒤로가기시 localhost:3000/ 으로 이동하게됨
