@@ -14,7 +14,6 @@
 }
 
 .leftSection {
-    background-color: orange;
     width: 275px;
     height: 100dvh;
     padding: 0 8px;
@@ -96,7 +95,6 @@
 }
 
 .rightSection {
-    background-color: aqua;
     width: 350px;
     height: 100%;
 }

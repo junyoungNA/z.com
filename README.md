@@ -75,3 +75,13 @@
   -      layout 구조와 아래에 있는 모든 폴더 경로들을 추출!
          home/content 라면 ['home', 'content'] 가 나옴!
   
+## classnames 로 조건부 스타일링 주기
+
+-         const commented = false; 
+          const reposted = false;
+          const liked = false; 
+          * componentButton의 스타일 지정되며 commented 가 true라면 commented 스타일도 함께 지정됨!
+          <div className={cx(style.componentButton, commented && style.commented)}><div>
+          <div className={cx(style.repostButton, reposted && style.reposted)}></div>
+          <div className={cx([style.hearButton, liked && style.liked])}></div>
+          
