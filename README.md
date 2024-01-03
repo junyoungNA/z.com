@@ -66,3 +66,12 @@
 - router.replace는 localhost:3000 -> localhost:3000/login -> localhost:3000/i/flow/login
   와 같은 폴더 구조이고 login으로 이동시 router.replace가 진행되어 i/flow/login으로 route가 된다면
   기존 localhost:3000/login 주소를 히스토리(기억)에서 지워버린다. 그러므로 localhost:3000/i/flow/login에서 뒤로가기시 localhost:3000/ 으로 이동하게됨
+
+  ## useSelectedLayoutSegment next에서 지원해주는 경로 추출 방법
+  -     localhost://3000/home 경로에 잇다면 home을 추출
+        현재 layout 경로에있는 폴더 경로들을 추출해 주는 것!
+        /home/content 경로라면 home만 나오게 됨
+  ## useSelectedLayoutSegments 로 모든 경로 추출
+  -      layout 구조와 아래에 있는 모든 폴더 경로들을 추출!
+         home/content 라면 ['home', 'content'] 가 나옴!
+  
