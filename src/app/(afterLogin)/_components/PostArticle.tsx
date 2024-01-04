@@ -6,18 +6,17 @@ import {useRouter} from "next/navigation";
 
 type Props = {
   children: ReactNode,
-  post: any
-    
-    // postId: number;
-    // content: string,
-    // User: {
-    //   id: string,
-    //   nickname: string,
-    //   image: string,
-    // },
-    // createdAt: Date,
-    // Images: any[],
-  
+  post:  {   
+    postId: number;
+    content: string,
+    User: {
+      id: string,
+      nickname: string,
+      image: string,
+    },
+    createdAt: Date,
+    Images: any[],
+  }
 }
 
 export default function PostArticle({ children, post}: Props) {

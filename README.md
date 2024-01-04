@@ -84,4 +84,17 @@
           <div className={cx(style.componentButton, commented && style.commented)}><div>
           <div className={cx(style.repostButton, reposted && style.reposted)}></div>
           <div className={cx([style.hearButton, liked && style.liked])}></div>
-          
+## client-componet 와 server-component를 같이사용하는 방법?
+-        부모가 클라이언트 컴포넌트고 자식 컴포넌트가 서버 컴포넌트라면
+         부모에서 children으로 서버 컴포넌트를 받아서 children으로 
+         서버 컴포넌트를 사용하면 된다!
+         ** 주의- import해서 서버 컴포넌트를 사용한다면 
+            서버 컴포넌트가 클라이언트 컴포넌트로 동작하게 된다!
+
+## 리액트 Event Capturing 
+-  이벤트 캡처링(Event Capturing)은 리액트 이벤트 시스템에서 이벤트가 DOM      트리를 따라 내려갈 때(이벤트가 발생한 엘리먼트에서 루트 엘리먼트까지), 이벤트 핸들러를 특정 순서로 호출하는 메커니즘을 말합니다. 리액트 이벤트 시스템은 일반적으로 이벤트 버블링과 함께 작동하며, 기본적으로는 이벤트 버블링이 적용됩니다. 그러나 이를 캡처링으로 변경할 수 있습니다.
+
+- 캡처링 단계(Capture Phase): 이벤트가 최상위 엘리먼트에서 시작하여 이벤트가 발생한 엘리먼트까지 이벤트 핸들러가 차례대로 호출됩니다.
+
+- 타깃 단계(Target Phase): 이벤트가 실제 타깃 엘리먼트에 도달하고, 이벤트 핸들러가 호출됩니다.
+- 버블링 단계(Bubbling Phase): 이벤트가 다시 최상위 엘리먼트까지 거슬러 올라가며 이벤트 핸들러가 차례대로 호출됩니다.
