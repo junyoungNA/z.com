@@ -5,7 +5,8 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ko';
 import ActionButtons from "./ActionButton";
 import PostArticle from "./PostArticle";
-// import {faker} from '@faker-js/faker';
+import {faker} from '@faker-js/faker';
+import { link } from 'fs';
 // import PostImages from "@/app/(afterLogin)/_component/PostImages";
 
 dayjs.locale('ko');
@@ -22,9 +23,15 @@ export default function Post({ noImage }: Props) {
       nickname: 'Elon Musk',
       image: '/yRsRRjGO.jpg',
     },
-    content: '클론코딩 라이브로 하니 너무 힘들어요 ㅠㅠ',
-    createdAt: new Date(),
-    Images: [] as any[],
+      content: '클론코딩 라이브로 하니 너무 힘들어요 ㅠㅠ',
+      createdAt: new Date(),
+      Images: [] as any ,
+    }
+
+    if(Math.random() > 0.5) {
+      target.Images.push(
+        {imageId : 1, link : faker.image.urlLoremFlickr()}
+      )
     }
 
   return (
@@ -49,8 +56,12 @@ export default function Post({ noImage }: Props) {
             <span className={style.postDate}>{dayjs(target.createdAt).fromNow(true)}</span>
           </div>
           <div>{target.content}</div>
-          <div>
-            {/* <PostImages post={target} /> */}
+          <div className={style.postImageSection}>
+              {target.Images && target.Images.length > 0 && (
+                <Link href={`/${target.User.id}/status/${target.postId}/photo/${target.Images[0].imageId}`}>
+                    <img src={target.Images[0]?.link} alt="" />
+                </Link>
+              )}
           </div>
           <ActionButtons/>
         </div>
